@@ -19,7 +19,7 @@ async def create_user(payload: UserCreate, db: AsyncSession = Depends(get_db)):
         raise HTTPException(status_code=409, detail="Email already registered")
 
     user = User(
-        id=str(uuid.uuid4()),
+        id=payload.id if payload.id else str(uuid.uuid4()),
         email=payload.email,
         name=payload.name,
         role=payload.role,

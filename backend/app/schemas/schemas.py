@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import enum
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
@@ -23,6 +23,7 @@ class UserRole(str, enum.Enum):
 
 
 class UserCreate(BaseModel):
+    id: Optional[str] = None
     email: EmailStr
     name: str
     role: UserRole = UserRole.STUDENT
@@ -75,7 +76,7 @@ class JobListingCreate(BaseModel):
     title: str
     company: str
     description: str
-    requirements: Optional[Dict[str, Any]] = None
+    requirements: Optional[Union[Dict[str, Any], List[Any]]] = None
 
 
 class JobListingRead(OrmModel):
@@ -84,7 +85,7 @@ class JobListingRead(OrmModel):
     title: str
     company: str
     description: str
-    requirements: Optional[Dict[str, Any]] = None
+    requirements: Optional[Union[Dict[str, Any], List[Any]]] = None
     is_active: bool
     created_at: datetime
 

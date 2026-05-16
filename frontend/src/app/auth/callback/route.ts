@@ -4,14 +4,20 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  // if "next" is in search params, use it as the redirection URL
-  const next = searchParams.get("next") ?? "/dashboard/student";
+  // "next" is set during sign-up to route to onboarding
+  const next = searchParams.get("next");
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
+
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+      // If a specific "next" path is provided (e.g. /onboarding/student), use it
+      if (next) {
+        return NextResponse.redirect(`${origin}${next}`);
+      }
+      // Otherwise resolve role and route to the correct dashboard
+      return NextResponse.redirect(`${origin}/auth/resolve-role`);
     }
   }
 

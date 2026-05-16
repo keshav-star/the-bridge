@@ -20,6 +20,7 @@ class Settings(BaseSettings):
 
     # ── OpenAI ────────────────────────────────────────
     OPENAI_API_KEY: str = ""
+    OPENAI_BASE_URL: str = "https://api.openai.com/v1"
     OPENAI_EMBED_MODEL: str = "text-embedding-3-small"
     OPENAI_CHAT_MODEL: str = "gpt-4o-mini"
     VECTOR_DIMENSION: int = 1536

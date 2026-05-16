@@ -56,7 +56,7 @@ async def find_top_candidates(
     for row in rows:
         candidates.append(
             CandidateMatch(
-                user_id=row.user_id,
+                user_id=str(row.user_id),
                 name=row.name,
                 email=row.email,
                 match_score=round(float(row.match_score), 4),

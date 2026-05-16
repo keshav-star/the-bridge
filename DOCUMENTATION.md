@@ -61,4 +61,24 @@ To be considered successful, The Bridge must meet the following business criteri
 *   **Database Administrator:** To optimize vector similarity searches and handle database migrations.
 
 ---
-*Prepared for The Bridge MVP Phase.*
+## 7. Technical Implementation & Architecture (Phase 2 Update)
+
+### **Authentication & Role Management**
+The platform uses a **Unified Auth Hub** powered by Supabase. 
+- **Role Selection:** Users choose between "Student" and "Recruiter" roles via a tabbed interface.
+- **Role Resolver:** After login, an internal route (`/auth/resolve-role`) queries the backend database to determine the user's role and redirects them to the appropriate dashboard.
+- **Onboarding:** First-time users are captured by a middleware that routes them to role-specific onboarding pages (`/onboarding/student` or `/onboarding/recruiter`) to finalize their backend records.
+
+### **AI Semantic Engine**
+- **Resume Parsing:** Uses PyMuPDF to extract text, which is then processed by an LLM (GPT-4o-mini via OpenRouter) to produce a structured "Skill Matrix".
+- **Embeddings:** Student skill matrices are vectorized using `text-embedding-3-small` and stored in a `pgvector` column in the `profiles` table.
+- **Vector Matching:** Recruiter JDs are vectorized on-the-fly and compared against the entire student database using Cosine Similarity (`<=>` operator) in PostgreSQL.
+
+### **UI Design System**
+The frontend is built with a custom dark-mode design system:
+- **Student Dashboard:** Indigo/Blue palette focusing on growth and applications.
+- **Recruiter Dashboard:** Violet/Purple palette focusing on search and vetting.
+- **Components:** High-fidelity glassmorphism effects, Framer Motion transitions, and Recharts for data visualization.
+
+---
+*Prepared for The Bridge MVP Phase — Updated 2026-05-16.*

@@ -40,7 +40,7 @@ export const resumeApi = {
 };
 
 export const jobsApi = {
-  createJob: async (jobData: { title: string; company: string; description: string; requirements: string[] }, posterId: string) => {
+  createJob: async (jobData: { title: string; company: string; description: string; requirements: string[] | null }, posterId: string) => {
     const res = await api.post(`/jobs/?poster_id=${posterId}`, jobData);
     return res.data;
   },
@@ -54,6 +54,17 @@ export const jobsApi = {
   },
   getJob: async (jobId: string) => {
     const res = await api.get(`/jobs/${jobId}`);
+    return res.data;
+  },
+};
+
+export const usersApi = {
+  getUser: async (userId: string) => {
+    const res = await api.get(`/users/${userId}`);
+    return res.data;
+  },
+  createUser: async (userData: any) => {
+    const res = await api.post("/users/", userData);
     return res.data;
   },
 };

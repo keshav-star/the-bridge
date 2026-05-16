@@ -1,6 +1,6 @@
 # The Bridge — Project Progress Tracker
 
-> Last updated: 2026-05-14
+> Last updated: 2026-05-16
 
 ---
 
@@ -51,7 +51,7 @@
 
 ---
 
-## Phase 2 — Backend AI Engine + Frontend API Integration `[~]` IN PROGRESS
+## Phase 2 — Backend AI Engine + Frontend API Integration ✅ COMPLETE
 
 ### Docker / Infrastructure
 - [x] Start Docker daemon
@@ -73,7 +73,10 @@
 - [x] Display real API data in both dashboards (replace mocks)
 - [x] Error handling + loading states on all API calls
 - [x] Auth (Supabase) integration (Infrastructure + UI)
-- [ ] Role-based access control (RBAC) refinements
+- [x] Role-based access control (RBAC) and routing architecture
+- [x] Unified Auth Hub with role-selection tabs
+- [x] Student & Recruiter onboarding flows
+- [x] OpenRouter / OpenAI base_url integration
 
 > [!IMPORTANT]
 > **Supabase Configuration Needed:**
@@ -106,5 +109,7 @@
 | # | Issue | Status |
 |---|-------|--------|
 | 1 | `@import url(Google Fonts)` conflicts with Tailwind v4 PostCSS — fixed by using system font stack | ✅ Fixed |
-| 2 | Docker not running — need to start daemon before `docker compose up` | `[~]` In Progress |
-| 3 | OpenAI API key not set — system uses mocks, add key to `.env` to enable real AI | Pending |
+| 2 | Supabase Auth redirect loop — fixed with resolve-role route | ✅ Fixed |
+| 3 | OpenRouter API key error (base_url mismatch) — fixed in ai_service.py | ✅ Fixed |
+| 4 | Pydantic validation error (requirements dict vs list) — fixed in schemas.py | ✅ Fixed |
+| 5 | SQLAlchemy UUID vs Pydantic str type error — fixed in matching_service.py | ✅ Fixed |

@@ -116,21 +116,21 @@ export default function LandingPage() {
             className="flex items-center gap-3"
           >
             <Link
-              href="/dashboard/student"
+              href="/auth"
               id="nav-student-link"
               className="rounded-md px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               Student
             </Link>
             <Link
-              href="/dashboard/recruiter"
+              href="/auth"
               id="nav-recruiter-link"
               className="rounded-md px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               Recruiter
             </Link>
             <Link
-              href="/dashboard/student"
+              href="/auth"
               id="nav-cta-btn"
               className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20"
             >
@@ -186,7 +186,7 @@ export default function LandingPage() {
           className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
         >
           <Link
-            href="/dashboard/student"
+            href="/auth"
             id="hero-student-cta"
             className="group flex items-center gap-2 rounded-xl bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-primary/40 hover:-translate-y-0.5"
           >
@@ -194,7 +194,7 @@ export default function LandingPage() {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
-            href="/dashboard/recruiter"
+            href="/auth"
             id="hero-recruiter-cta"
             className="group flex items-center gap-2 rounded-xl border border-border bg-secondary px-8 py-3.5 text-base font-semibold transition-all hover:bg-muted hover:-translate-y-0.5"
           >
@@ -284,7 +284,7 @@ export default function LandingPage() {
             Join the UIET community on The Bridge. It takes 30 seconds to set up.
           </p>
           <Link
-            href="/dashboard/student"
+            href="/auth"
             id="footer-cta-btn"
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-10 py-4 text-lg font-bold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:-translate-y-0.5"
           >

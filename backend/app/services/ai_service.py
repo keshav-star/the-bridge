@@ -17,6 +17,10 @@ import fitz  # PyMuPDF
 from app.core.config import settings
 from app.schemas import SkillMatrix
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 # ── OpenAI client (lazy init) ─────────────────────────────────────────────────
 
 _openai_client = None
@@ -26,7 +30,20 @@ def _get_openai():
     global _openai_client
     if _openai_client is None and settings.OPENAI_API_KEY:
         from openai import AsyncOpenAI
-        _openai_client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+        
+        # OpenRouter usually doesn't support the 'json_object' response format on all models,
+        # but let's first ensure the base_url is being picked up.
+        logger.info(f"Initializing AI client with base_url: {settings.OPENAI_BASE_URL}")
+        
+        _openai_client = AsyncOpenAI(
+            api_key=settings.OPENAI_API_KEY,
+            base_url=settings.OPENAI_BASE_URL,
+            # OpenRouter optional headers
+            default_headers={
+                "HTTP-Referer": "https://github.com/justtitle/the-bridge",
+                "X-Title": "The Bridge Platform",
+            }
+        )
     return _openai_client
 
 
@@ -89,15 +106,24 @@ async def parse_resume_to_skill_matrix(resume_text: str) -> SkillMatrix:
     if not client:
         return _MOCK_SKILL_MATRIX
 
-    response = await client.chat.completions.create(
-        model=settings.OPENAI_CHAT_MODEL,
-        messages=[
+    kwargs = {
+        "model": settings.OPENAI_CHAT_MODEL,
+        "messages": [
             {"role": "system", "content": "You extract structured JSON from resumes. Return only valid JSON."},
             {"role": "user", "content": _PARSE_PROMPT + resume_text[:8000]},
         ],
-        temperature=0,
-        response_format={"type": "json_object"},
-    )
+        "temperature": 0,
+    }
+    
+    # Try using json_object if supported
+    try:
+        response = await client.chat.completions.create(
+            **kwargs,
+            response_format={"type": "json_object"},
+        )
+    except Exception as e:
+        logger.warning(f"JSON mode failed, retrying without it: {e}")
+        response = await client.chat.completions.create(**kwargs)
     raw = response.choices[0].message.content or "{}"
     data = json.loads(raw)
     return SkillMatrix(**data)
